@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:fragment="main-fragment (title, otherStaticResources, mainContent)">
+<head>
+<meta charset="utf-8" />
+<title th:replace="${title}">EMI Gestion Note</title>
+<link rel="stylesheet" type="text/css"
+	href="../../static/css/bootstrap.min.css"
+	th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" href="../../static/css/sites.css"
+	th:href="@{/css/sites.css}" />
+<script src="../static/js/bootstrap.min.js"
+	th:src="@{/js/bootstrap.min.js}"></script>
+<!-- Other javascript, css source files -->
+<th:block th:replace="${otherStaticResources} ?: ~{}"></th:block>
+</head>
+<body>
+	<header>
+		<div class="navbar navbar-default">
+			<div class="container-fluid">
+				<ul class="nav navbar-nav navbar-left">
+					<table class="table panel-heading">
+						<tr>
+							<td>
+								<li><a th:href="@{/professeurs}">Professeurs</a></li>
+							</td>
+							<td>
+								<li><a th:href="@{/students}">Etudiants</a></li>
+							</td>
+							<td>
+								<li><a th:href="@{/matieres}">Matieres</a></li>
+							</td>
+							<td>
+								<li><a th:href="@{/notes}">Notes</a></li>
+							</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>
+								<li><a th:href="@{/login?logout}"
+									th:text="${#httpServletRequest.remoteUser}">logout</a></li>
+							</td>
+						</tr>
+					</table>
+				</ul>
+			</div>
+		</div>
+	</header>
+	<section class="container">
+		<article th:insert="${mainContent} ?: ~{}">
+			<h1>Page 1</h1>
+			<p>Main content of Page 1</p>
+		</article>
+	</section>
+	<footer>
+		<div class="float navbar-fixed-bottom">
+			<table class="table">
+				<tr>
+					<td align="left">
+						<div class="float-left">
+							<small><a href="mailto:kabbaj@emi.ac.ma">@emi.ac.ma</a></small>
+						</div>
+					</td>
+					<td align="right">
+						<div class="float-right">
+							<small>@Copyright</small>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</footer>
+</body>
+</html>

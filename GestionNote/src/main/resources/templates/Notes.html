@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{layouts/MyTemplate :: main-fragment(  
+                                                ~{::title},
+                                                ~{:: #home-static-resources},
+                                                ~{:: #home-main-content},  
+                                               )}">
+
+<th:block id="home-static-resources">
+	<script type="text/javascript" src="../static/js/home.js"
+		th:src="@{/js/home.js}"></script>
+	<link rel="stylesheet" type="text/css" href="../static/css/sites.css"
+		th:href="@{/css/sites.css}" />
+</th:block>
+
+<head>
+<meta charset="utf-8" />
+<title>Notes</title>
+</head>
+<body>
+	<div id="home-main-content">
+		<div class="panel panel-primary">
+			<table class="panel-heading table ">
+				<tr>
+					<td>
+						<div class="panel-heading">Liste des Notes</div>
+					</td>
+					<td>
+						<ul class="nav nav-pills">
+							<li th:class="active"><a th:href="@{/ajouternote}">+ </a></li>
+						</ul>
+					</td>
+				</tr>
+			</table>
+			<div class="panel-body">
+				<form th:action="@{/chercherNote}" method="get">
+					<div>
+						<table class="table table-striped">
+							<tr>
+								<td><label>Matricule Etudiant : </label>
+								</th>
+								<td><input type="text" name="matriculeStudent" />
+								</th>
+								<td><label>Nom Matiere : </label>
+								</th>
+								<td><input type="text" name="nomMatiere" />
+								</th>
+								<td><button type="submit" class="btn btn-primary">chercher</button>
+								</th>
+							</tr>
+						</table>
+					</div>
+				</form>
+				<table class="table table-striped">
+					<tr>
+						<th>Matricule Etudiant</th>
+						<th>Etudiant</th>
+						<th>Matiere</th>
+						<th>Note</th>
+						<th>Abreciation</th>
+					</tr>
+					<tr th:each="e:${listNotes}">
+						<td th:text="${e.student.matricule}"></td>
+						<td th:text="${e.student.nom} + ' ' + ${e.student.prenom}"></td>
+						<td th:text="${e.matiere.nom}"></td>
+						<td th:text="${e.note}"></td>
+						<td th:text="${e.abreciation}"></td>
+					</tr>
+				</table>
+				<div>
+					<ul class="nav nav-pills">
+						<li th:class="${status.index==pageCourante}?'active':''"
+							th:each="p,status:${pages}"><a
+							th:href="@{/chercherNote(page=${status.index}, size=${size}, matriculeStudent=${matriculeStudent}, nomMatiere=${nomMatiere})}"
+							th:text="${status.index}"></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

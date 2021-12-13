@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{layouts/MyTemplate :: main-fragment(  
+                                                ~{::title},
+                                                ~{:: #home-static-resources},
+                                                ~{:: #home-main-content},  
+                                               )}">
+
+<th:block id="home-static-resources">
+	<script type="text/javascript" src="../static/js/home.js"
+		th:src="@{/js/home.js}"></script>
+	<link rel="stylesheet" type="text/css" href="../static/css/sites.css"
+		th:href="@{/css/sites.css}" />
+</th:block>
+
+<head>
+<meta charset="utf-8" />
+<title>Etudiants</title>
+</head>
+<body>
+	<div id="home-main-content">
+		<div class="panel panel-primary">
+			<div class="panel-heading">Liste des Etudiants</div>
+			<div class="panel-body">
+				<form th:action="@{/chercherStudent}" method="get">
+					<table class="table table-striped">
+						<tr>
+							<td><label>Nom etudiant</label>
+							</th>
+							<td><input type="text" name="nomStudent" />
+							</th>
+							<td><button type="submit" class="btn btn-primary">chercher</button>
+							</th>
+						</tr>
+					</table>
+				</form>
+				<table class="table table-striped">
+					<tr>
+						<th>Matricule</th>
+						<th>Nom</th>
+						<th>Prenom</th>
+						<th>Date Naissance</th>
+						<th>Niveau</th>
+						<th>Annee de Reserve</th>
+					</tr>
+					<tr th:each="e:${listStudents}">
+						<td th:text="${e.Matricule}"></td>
+						<td th:text="${e.nom}"></td>
+						<td th:text="${e.prenom}"></td>
+						<td th:text="${e.date_naissance}"></td>
+						<td th:text="${e.niveau}"></td>
+						<td th:if="${e.anneeReserve}">Oui</span>
+						<td th:unless="${e.anneeReserve}">Non</span>
+					</tr>
+				</table>
+				<div>
+					<ul class="nav nav-pills">
+						<li th:class="${status.index==pageCourante}?'active':''"
+							th:each="p,status:${pages}"><a
+							th:href="@{/chercherStudent(nomStudent=${nomStudent}, page=${status.index}, size=${size})}"
+							th:text="${status.index}"></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

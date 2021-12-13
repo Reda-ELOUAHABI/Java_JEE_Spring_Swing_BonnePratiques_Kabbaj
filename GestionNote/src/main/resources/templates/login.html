@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{layouts/MyTemplate :: main-fragment(  
+                                                ~{::title},
+                                                ~{:: #home-static-resources},
+                                                ~{:: #home-main-content},  
+                                               )}">
+
+<th:block id="home-static-resources">
+	<script type="text/javascript" src="../static/js/home.js"
+		th:src="@{/js/home.js}"></script>
+	<link rel="stylesheet" type="text/css" href="../static/css/sites.css"
+		th:href="@{/css/sites.css}" />
+</th:block>
+
+<head>
+<meta charset="utf-8" />
+<title>Login</title>
+</head>
+<body>
+	<div id="home-main-content">
+		<div class="panel panel-primary">
+			<div class="panel-heading">Authentification</div>
+			<div class="panel-body">
+				<form th:action="@{/login}" method="post">
+					<div class="panel-heading">
+						<div class="form-group">
+							<label class="control-label"> <span class="red"
+								th:if="${param.error}"> le mot de passe ou le login est
+									incorrect </span> <span class="red" th:if="${param.logout}">
+									vous êtes déconnecté </span>
+							</label>
+						</div>
+						<div class="form-group">
+							<label class="control-label">Login :</label> <input type="text"
+								name="username" class="form-control" />
+						</div>
+						<div class="form-group">
+							<label class="control-label">password :</label> <input
+								type="password" name="password" class="form-control" />
+						</div>
+						<div class="form-group">
+							<button type="submit" class="btn btn-primary">Login</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

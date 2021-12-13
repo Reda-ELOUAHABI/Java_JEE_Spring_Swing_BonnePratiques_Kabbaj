@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{layouts/MyTemplate :: main-fragment(  
+                                                ~{::title},
+                                                ~{:: #home-static-resources},
+                                                ~{:: #home-main-content},  
+                                               )}">
+
+<th:block id="home-static-resources">
+	<script type="text/javascript" src="../static/js/home.js"
+		th:src="@{/js/home.js}"></script>
+	<link rel="stylesheet" type="text/css" href="../static/css/sites.css"
+		th:href="@{/css/sites.css}" />
+</th:block>
+
+<head>
+<meta charset="utf-8" />
+<title>Matieres</title>
+</head>
+<body>
+	<div id="home-main-content">
+		<div class="panel panel-primary">
+			<div class="panel-heading">Liste des Matieres</div>
+			<div class="panel-body">
+				<form th:action="@{/chercherMatiere}" method="get">
+					<table class="table table-striped">
+						<tr>
+							<td><label>Nom Matiere</label>
+							</th>
+							<td><input type="text" name="nomMatiere" />
+							</th>
+							<td><button type="submit" class="btn btn-primary">chercher</button>
+							</th>
+						</tr>
+					</table>
+				</form>
+				<table class="table table-striped">
+					<tr>
+						<th>Nom</th>
+						<th>Volume Horaire</th>
+						<th>Semestre</th>
+					</tr>
+					<tr th:each="e:${listMatieres}">
+						<td th:text="${e.nom}"></td>
+						<td th:text="${e.volumeHoraire}"></td>
+						<td th:text="${e.semestre}"></td>
+					</tr>
+				</table>
+				<div>
+					<ul class="nav nav-pills">
+						<li th:class="${status.index==pageCourante}?'active':''"
+							th:each="p,status:${pages}"><a
+							th:href="@{/chercherMatiere(page=${status.index}, size=${size}, nomMatiere=${nomMatiere})}"
+							th:text="${status.index}"></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
